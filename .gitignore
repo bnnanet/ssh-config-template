@@ -10,6 +10,7 @@
 
 # allow git files
 !README.md
+!.prettierrc.json
 !.gitignore
 !.gitkeep
 

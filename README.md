@@ -14,6 +14,7 @@ A template for modern SSH Config
     -   [GitHub-flavored Markdown](#github-flavored-markdown)
 -   [Cheat Sheet](#ssh-cli--config-cheat-sheet)
     -   [Port Forward (to localhost)](#how-to-port-forward-over-ssh)
+    -   [SSH over TLS](#how-to-tunnel-ssh-client-over-tls)
 
 ## Overview
 
@@ -216,3 +217,23 @@ Notes:
     ```sh
     ssh webproxy-XXXXXX.cloud.example.net -L 3080:example.com:443 -fnNT
     ```
+
+### How to tunnel SSH client over TLS
+
+Using [sclient](https://webinstall.dev/sclient): \
+(easy to remember)
+
+```ssh-config
+# sclient
+ProxyCommand sclient --alpn ssh %h
+```
+
+Using `s_client`: \
+(almost always already installed)
+
+```ssh-config
+# openssl s_client
+ProxyCommand openssl s_client -connect %h:443 -alpn ssh -quiet 2>/dev/null
+```
+
+For how to multiplex SSH-over-TLS on the server, see <https://github.com/mholt/caddy-l4/issues/101>.

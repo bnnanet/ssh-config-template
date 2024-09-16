@@ -142,7 +142,7 @@ Host *
     ServerAliveInterval 3600
     # Share sessions to the same host and keep them alive
     ControlMaster auto
-    ControlPath ~/.ssh/%r:%t@%h:%p
+    ControlPath ~/.ssh/%r@%h:%p
     ControlPersist 15m
     # Which keys to try, in order
     IdentityFile ~/.ssh/id_ed25519
@@ -232,7 +232,7 @@ Host pg-forward
 
     # Share the connection rather than erroring when run multiple times
     ControlMaster auto
-    ControlPath ~/.ssh/%r:%t@%h:%p
+    ControlPath ~/.ssh/%r@%h:%p
     ControlPersist 15m
 ```
 

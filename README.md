@@ -6,6 +6,9 @@ A template for modern SSH Config
 
 -   [Overview](#overview)
 -   [Initial Setup](#how-to-initialize-a-users-ssh-config)
+-   [Reasonable Defaults](#reasonable-defaults)
+    -   [~/.ssh/config:](#sshconfig)
+    -   [~/.ssh/config.d/example.sshconfig:](#sshconfigdexamplesshconfig)
 
 ## Overview
 
@@ -85,3 +88,39 @@ Notes:
     !.gitignore
     !.gitkeep
     ```
+
+## Reasonable Defaults
+
+-   `~/.ssh/config` is used for global config and fallbacks
+-   `~/.ssh/config.d/<name>.sshconfig` is used for groups or individual host config
+
+### `~/.ssh/config`:
+
+```ssh-config
+Include ~/.ssh/config.d/*.sshconfig
+
+## Global Defaults
+Host *
+    User app
+    Port 22
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 3600
+    # Share sessions to the same host and keep them alive
+    ControlMaster auto
+    ControlPath ~/.ssh/%r:%t@%h:%p
+    ControlPersist 15m
+    # Which keys to try, in order
+    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/id_ecdsa
+    IdentityFile ~/.ssh/id_rsa
+```
+
+### `~/.ssh/config.d/example.sshconfig`:
+
+```ssh-config
+Host example example.com example-XXXXXX.cloud.example.net
+    # Internal IP 10.0.0.101
+    Hostname example-1.ffffff.example.net
+    User app
+    Port 22
+```

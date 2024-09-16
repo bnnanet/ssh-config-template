@@ -12,6 +12,8 @@ A template for modern SSH Config
 -   [Syntax Highlighting](#how-to-get-ssh-config-syntax-highlighting)
     -   [VIM](#vim)
     -   [GitHub-flavored Markdown](#github-flavored-markdown)
+-   [Cheat Sheet](#ssh-cli--config-cheat-sheet)
+    -   [Port Forward (to localhost)](#how-to-port-forward-over-ssh)
 
 ## Overview
 
@@ -161,3 +163,49 @@ Host example example.com example-XXXXXX.cloud.example.net
 ```
 
 Follow <https://github.com/github-linguist/linguist/issues/7041> for future updates.
+
+## SSH CLI + Config Cheat Sheet
+
+### How to Port Forward over SSH
+
+This example forwards remote port 5432 on a postgres server to be able to listen on port 54321 locally.
+
+Create a one-off local-forward connection like this:
+
+```sh
+ssh pg-XXXXXX.cloud.example.net -L 54321:127.0.0.1:5432 -fnNT
+```
+
+Or create a reusable alias for `ssh pg-forward` using a config like this:
+
+```ssh-config
+# ssh pg
+Host pg-forward
+    Hostname pg-XXXXXX.cloud.example.net
+
+    # LocalForward <local-port> <remote-network-host>:<remote-port>
+    LocalForward 54321 127.0.0.1:5432
+
+    # -f    Requests ssh to go to background just before command execution.
+    ForkAfterAuthentication yes
+
+    # -n    Documented as implied by -f, but explicit is more reliable, at least on macOS
+    StdinNull yes
+
+    # -N    Do not execute a remote command.
+    SessionType none
+
+    # -T    Disable pseudo-tty allocation.
+    RequestTTY no
+
+    # Share the connection rather than erroring when run multiple times
+    ControlMaster auto
+    ControlPath ~/.ssh/%r:%t@%h:%p
+    ControlPersist 15m
+```
+
+Then each time the alias is used, the config will be applied automatically:
+
+```sh
+ssh pg-forward
+```

@@ -209,3 +209,10 @@ Then each time the alias is used, the config will be applied automatically:
 ```sh
 ssh pg-forward
 ```
+
+Notes:
+
+-   instead of `127.0.0.1`, you can choose another host that the ssh server has access to - such as forwarding web traffic from example.com:
+    ```sh
+    ssh webproxy-XXXXXX.cloud.example.net -L 3080:example.com:443 -fnNT
+    ```

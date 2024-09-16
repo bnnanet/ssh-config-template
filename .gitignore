@@ -1,0 +1,24 @@
+# ignore everything
+*
+
+# allow files that may reasonably be shared across machines
+# (NO KEYS!)
+!authorized_keys
+!config
+!config.d/
+!config.d/**.sshconfig
+
+# allow git files
+!README.md
+!.gitignore
+!.gitkeep
+
+# Double Ignore
+# ignore all keys and hosts
+id_*
+known_hosts
+
+# ignore temp and cache files
+*.bak
+*.old
+.*.sw*

@@ -2,6 +2,11 @@
 
 A template for modern SSH Config
 
+# Table of Contents
+
+-   [Overview](#overview)
+-   [Initial Setup](#how-to-initialize-a-users-ssh-config)
+
 ## Overview
 
 Here's what a properly configured `~/.ssh/` looks like:

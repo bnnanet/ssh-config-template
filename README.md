@@ -9,6 +9,9 @@ A template for modern SSH Config
 -   [Reasonable Defaults](#reasonable-defaults)
     -   [~/.ssh/config:](#sshconfig)
     -   [~/.ssh/config.d/example.sshconfig:](#sshconfigdexamplesshconfig)
+-   [Syntax Highlighting](#how-to-get-ssh-config-syntax-highlighting)
+    -   [VIM](#vim)
+    -   [GitHub-flavored Markdown](#github-flavored-markdown)
 
 ## Overview
 
@@ -124,3 +127,37 @@ Host example example.com example-XXXXXX.cloud.example.net
     User app
     Port 22
 ```
+
+## How to get SSH Config Syntax Highlighting
+
+### VIM
+
+`~/.vimrc`:
+
+```vim
+autocmd BufNewFile,BufRead *.ssh,*.sshconfig setfiletype sshconfig
+```
+
+### GitHub-flavored Markdown
+
+GitHub uses the ` ```ssh-config ` codeblock for sshconfig highlighting.
+
+````mkdn
+```ssh-config
+# ssh example
+Host example example.com example-XXXXXX.cloud.example.net
+    # Internal IP 10.0.0.101
+    Hostname example-1.ffffff.example.net
+    ProxyCommand sclient --alpn ssh %h
+```
+````
+
+```ssh-config
+# ssh example
+Host example example.com example-XXXXXX.cloud.example.net
+    # Internal IP 10.0.0.101
+    Hostname example-1.ffffff.example.net
+    ProxyCommand sclient --alpn ssh %h
+```
+
+Follow <https://github.com/github-linguist/linguist/issues/7041> for future updates.

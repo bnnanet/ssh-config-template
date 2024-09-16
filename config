@@ -1,0 +1,16 @@
+Include ~/.ssh/config.d/*
+
+## Global Defaults
+Host *
+    User app
+    Port 22
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 3600
+    # Share sessions to the same host and keep them alive
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist 15m
+    # Which keys to try, in order
+    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/id_ecdsa
+    IdentityFile ~/.ssh/id_rsa

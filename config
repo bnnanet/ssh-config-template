@@ -1,4 +1,4 @@
-Include ~/.ssh/config.d/*
+Include ~/.ssh/config.d/*.sshconfig
 
 ## Global Defaults
 Host *
